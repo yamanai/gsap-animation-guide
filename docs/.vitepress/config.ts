@@ -2,8 +2,9 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.vuejs.org/config/app-configs
 export default defineConfig({
+  base: '/gsap-animation-guide/',
   // 网站标题
-  title: 'GSAP 动画全栈开发指南',
+  title: 'GSAP 动画开发指南',
   // 网站描述
   description: '学习如何在纯JavaScript、Vue3和React中使用GSAP创建专业级动画效果',
   // 语言
