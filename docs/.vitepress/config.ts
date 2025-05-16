@@ -11,7 +11,7 @@ export default defineConfig({
   lang: 'zh-CN',
   // 网站图标
   head: [
-    ['link', { rel: 'icon', href: '/logo.svg' }]
+    ['link', { rel: 'icon', href: '/gsap-animation-guide/logo.svg' }]
   ],
   // Markdown 配置
   markdown: {
@@ -147,7 +147,7 @@ export default defineConfig({
     },
     // 社交链接
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/yourusername/gsap-guide' }
+      { icon: 'github', link: 'https://github.com/yamanai/gsap-animation-guide' }
     ],
     // 页脚
     footer: {
