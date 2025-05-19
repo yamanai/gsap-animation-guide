@@ -23,7 +23,7 @@
 <GsapEditor 
   initialHtml="<div class='box'></div>"
   initialCss=".box { width: 100px; height: 100px; background-color: #3498db; border-radius: 8px; margin: 100px auto; }"
-  initialJs="gsap.to('.box', { duration: 2, rotation: 360, x: 100, backgroundColor: '#e74c3c', ease: 'elastic.out(1, 0.3)' });"
+  initialJs="gsap.to('.box', { duration: 2, rotation: 360, x: 80, backgroundColor: '#e74c3c', ease: 'elastic.out(1, 0.3)' });"
 />
 
 ## 高级示例
@@ -33,7 +33,7 @@
 <GsapEditor 
   initialHtml="<div class='panel'><h2>滚动触发动画</h2><div class='box'></div></div>"
   initialCss=".panel { height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; } .box { width: 100px; height: 100px; background-color: #9b59b6; border-radius: 8px; }"
-  initialJs="// 需要先注册ScrollTrigger插件\ngsap.registerPlugin(ScrollTrigger);\n\ngsap.to('.box', {\n  scrollTrigger: {\n    trigger: '.panel',\n    start: 'top center',\n    end: 'bottom center',\n    scrub: true,\n    markers: true\n  },\n  rotation: 360,\n  scale: 2,\n  duration: 1\n});"
+  initialJs="// 需要先注册ScrollTrigger插件\ngsap.registerPlugin(ScrollTrigger);\n\ngsap.to('.box', {\n  scrollTrigger: {\n    trigger: '.panel',\n    start: 'top center',\n    end: 'bottom center',\n    scrub: true,\n    markers: true\n  },\n  rotation: 360,\n  scale: 1.5, // 缩小缩放比例，避免超出视口\n  x: 50, // 添加适度的水平移动\n  duration: 1\n});"
 />
 
 ## 功能特点

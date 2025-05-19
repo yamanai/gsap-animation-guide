@@ -1,299 +1,359 @@
-# GSAP简介与环境搭建
+# GSAP 入门指南
 
-## 什么是GSAP？
+欢迎来到 GSAP 的世界！本章将帮助你了解 GSAP 的基本概念，并引导你轻松上手这个强大的 JavaScript 动画库。
 
-GSAP (GreenSock Animation Platform) 是一个专业级的JavaScript动画库，由GreenSock团队开发维护。它提供了一套强大、灵活的工具，让开发者能够轻松创建从简单到复杂的各种网页动画效果。无论是基础的UI元素动画，还是复杂的交互体验，GSAP都能优雅高效地实现。
+## 什么是 GSAP？
 
-<div class="gsap-feature-box">
-  <div class="feature">
-    <div class="icon">⚡</div>
-    <div class="title">超高性能</div>
-    <div class="desc">经过优化的动画引擎，提供比CSS动画和其他库更流畅的60fps动画体验</div>
-  </div>
-  <div class="feature">
-    <div class="icon">🌐</div>
-    <div class="title">跨浏览器兼容</div>
-    <div class="desc">解决各种浏览器兼容性问题，让你专注于创意而不是调试</div>
-  </div>
-  <div class="feature">
-    <div class="icon">🧩</div>
-    <div class="title">模块化设计</div>
-    <div class="desc">核心模块轻量高效，插件系统按需扩展功能</div>
-  </div>
-</div>
+**GSAP**（GreenSock Animation Platform）是一个专业级的 JavaScript 动画库，它让开发者能够轻松创建流畅、高性能的网页动画。无论是简单的 UI 元素动效，还是复杂的交互体验，GSAP 都能帮你实现。
 
-## GSAP的历史与发展
-
-GSAP的历史可以追溯到Flash时代。当时，GreenSock团队开发了ActionScript版的动画平台，广受欢迎。随着Flash的衰落和HTML5的兴起，GreenSock将这套成熟的动画系统移植到了JavaScript平台，就此诞生了GSAP。
-
-从初代版本到如今的GSAP 3，它经历了多次重大更新：
-
-- **2013年**: GSAP 1.0发布，替代了早期的TweenLite和TweenMax
-- **2019年**: GSAP 3.0发布，带来了彻底重新设计的API和更高性能
-- **2023年**: 最新的GSAP 3.13.0进一步优化并增强了功能集
-
-如今，GSAP已成为行业标准，被Apple、Google、Microsoft、Spotify等公司的网站采用，也是众多创意网站的首选动画解决方案。
-
-## 与其他动画库的对比
-
-为什么选择GSAP而不是其他流行的动画解决方案？让我们看看它与几个主要竞争对手的对比：
-
-| 特性 | GSAP | CSS动画 | Anime.js | Motion One |
-|------|------|---------|---------|------------|
-| 性能 | ★★★★★ | ★★★☆☆ | ★★★★☆ | ★★★★☆ |
-| 灵活性 | ★★★★★ | ★★☆☆☆ | ★★★★☆ | ★★★☆☆ |
-| 学习曲线 | 中等 | 简单 | 简单 | 中等 |
-| 社区支持 | 极强 | 极强 | 一般 | 较新 |
-| 功能丰富度 | ★★★★★ | ★★☆☆☆ | ★★★☆☆ | ★★★☆☆ |
-| 文件大小 | ~120KB(全部) / ~34KB(核心) | 0KB(内置) | ~16KB | ~12KB |
-
-虽然GSAP核心库比某些替代品稍大，但它提供了无与伦比的功能集和性能优势，特别是在复杂动画场景中。
-
-## 安装与引入方式
-
-GSAP提供多种安装和引入方法，适用于不同的项目需求：
-
-### 方法一：通过CDN引入
-
-最简单的方式是通过CDN直接在HTML文件中引入GSAP：
-
-```html
-<!-- 基础版本 - 只包含核心功能 -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-
-<!-- 全功能版本 - 包含所有插件 -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/all.min.js"></script>
-```
-
-如果只需要特定插件，可以单独引入：
-
-```html
-<!-- 核心 + ScrollTrigger插件 -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-```
-
-### 方法二：通过包管理器安装
-
-在现代前端工程化项目中，推荐使用npm或yarn安装GSAP：
-
-```bash
-# 使用npm
-npm install gsap
-
-# 使用yarn
-yarn add gsap
-```
-
-然后在你的项目中引入：
-
-```javascript
-// 引入核心库
-import gsap from 'gsap';
-
-// 引入插件(如ScrollTrigger)
-import ScrollTrigger from 'gsap/ScrollTrigger';
-
-// 注册插件
-gsap.registerPlugin(ScrollTrigger);
-```
-
-## 你的第一个GSAP动画
-
-让我们创建一个简单的动画来感受GSAP的魅力。这个例子会让一个方块在2秒内向右移动200像素并旋转360度：
-
-<div class="gsap-demo">
-  <div class="demo-container">
-    <div class="box" id="firstBox"></div>
-    <div class="controls">
-      <button class="play-btn">播放</button>
-      <button class="reset-btn">重置</button>
+<div class="features-container">
+  <div class="feature-card">
+    <div class="feature-icon">⚡</div>
+    <div class="feature-content">
+      <h3>高性能</h3>
+      <p>经过优化的动画引擎，即使在复杂动画场景下也能保持流畅的 60fps 性能</p>
     </div>
   </div>
   
-  ```javascript
-  // 选择目标元素
-  const box = document.querySelector("#firstBox");
+  <div class="feature-card">
+    <div class="feature-icon">🧩</div>
+    <div class="feature-content">
+      <h3>灵活易用</h3>
+      <p>简洁的 API 设计，让你用最少的代码实现强大的动画效果</p>
+    </div>
+  </div>
   
-  // 创建动画
-  gsap.to(box, {
-    duration: 2,
-    x: 200,
-    rotation: 360,
-    backgroundColor: "#42b883",
-    ease: "power2.inOut"
-  });
-  ```
+  <div class="feature-card">
+    <div class="feature-icon">🌐</div>
+    <div class="feature-content">
+      <h3>兼容性好</h3>
+      <p>解决各种浏览器兼容性问题，让你专注创意而非调试</p>
+    </div>
+  </div>
+  
+  <div class="feature-card">
+    <div class="feature-icon">🔄</div>
+    <div class="feature-content">
+      <h3>精确控制</h3>
+      <p>对动画的每个方面都有细粒度控制，包括时间轴、缓动、状态等</p>
+    </div>
+  </div>
+</div>
+
+## 为什么选择 GSAP？
+
+在众多动画解决方案中，GSAP 有哪些独特优势？
+
+1. **简单直观** - GSAP 的 API 设计直观易懂，即使你是动画新手也能快速上手
+2. **功能全面** - 从基础动画到复杂的时间轴序列，GSAP 都能轻松实现
+3. **不受框架限制** - 可以在任何 JavaScript 环境中使用，包括原生 JS、React、Vue 等
+4. **专业级性能** - 优化的动画引擎让复杂动画也能保持流畅
+5. **活跃的社区** - 丰富的教程资源和活跃的开发者社区提供持续支持
+
+## 快速开始：在项目中引入 GSAP
+
+GSAP 提供了多种引入方式，适合不同的项目需求。让我们从最简单的开始：
+
+### 方法一：通过 CDN 引入
+
+最简单的方式是通过 CDN 直接在 HTML 文件中引入 GSAP：
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>GSAP 快速开始</title>
+</head>
+<body>
+  <!-- 创建一个元素用于动画 -->
+  <div class="box"></div>
+
+  <!-- 引入 GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  
+  <!-- 编写动画代码 -->
+  <script>
+    // 创建一个简单的动画
+    gsap.to(".box", {
+      x: 100,                // 向右移动 100px
+      rotation: 360,         // 旋转 360 度
+      backgroundColor: "purple", // 背景色变为紫色
+      duration: 2            // 动画持续 2 秒
+    });
+  </script>
+  
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: teal;
+      margin: 100px;
+    }
+  </style>
+</body>
+</html>
+```
+
+### 方法二：通过 npm 安装（现代项目推荐）
+
+在现代前端项目中，通过包管理器安装是更常见的方式：
+
+```bash
+# 使用 npm 安装
+npm install gsap
+
+# 或使用 yarn 安装
+yarn add gsap
+```
+
+然后在你的 JavaScript 文件中导入：
+
+```javascript
+// 导入 GSAP 核心库
+import gsap from 'gsap';
+
+// 现在你可以使用 GSAP 了
+gsap.to(".box", { x: 100, duration: 1 });
+```
+
+## 你的第一个 GSAP 动画
+
+让我们创建一个简单的动画来感受 GSAP 的魅力。下面是一个基础示例，展示了一个方块从左向右移动，同时旋转并改变颜色：
+
+<div class="gsap-demo">
+  <div class="demo-container">
+    <div class="demo-box" id="firstDemo"></div>
+    <div class="demo-controls">
+      <button class="demo-button" id="playFirstDemo">播放</button>
+      <button class="demo-button" id="resetFirstDemo">重置</button>
+    </div>
+  </div>
+  
+  <div class="code-preview">
+    <pre><code>// 创建一个简单的动画
+gsap.to("#firstDemo", {
+  x: 200,                // 向右移动 200px
+  rotation: 360,         // 旋转 360 度
+  backgroundColor: "#8A2BE2", // 背景色变为紫色
+  duration: 2,           // 动画持续 2 秒
+  ease: "power1.inOut"   // 缓动函数
+});</code></pre>
+  </div>
 </div>
 
 ### 代码解析
 
-1. `gsap.to()` - GSAP的核心方法之一，用于将元素从当前状态动画到指定的目标状态
-2. 第一个参数 - 目标元素，可以是DOM元素、选择器字符串或元素数组
-3. 第二个参数 - 配置对象，包含:
-   - `duration`: 动画持续时间(秒)
-   - `x`: X轴位移(像素)
-   - `rotation`: 旋转角度(度)
-   - `backgroundColor`: 背景颜色
-   - `ease`: 缓动函数，控制动画的速度变化
+让我们来分解这个简单动画的各个部分：
+
+1. `gsap.to()` - GSAP 的核心方法之一，用于创建从当前状态到目标状态的动画
+2. `"#firstDemo"` - 目标元素的选择器（这里是一个 ID 选择器）
+3. 动画配置对象:
+   - `x: 200` - 水平方向移动 200 像素
+   - `rotation: 360` - 旋转 360 度（一整圈）
+   - `backgroundColor: "#8A2BE2"` - 背景色变为紫色
+   - `duration: 2` - 动画持续 2 秒
+   - `ease: "power1.inOut"` - 缓动函数，控制动画速度的变化
+
+## GSAP 核心概念预览
+
+在进一步学习之前，让我们快速了解 GSAP 的一些核心概念：
+
+### 1. 动画方法
+
+GSAP 提供了几个基本的动画方法：
+
+```javascript
+// 从当前状态到目标状态的动画
+gsap.to(".element", { x: 100 });
+
+// 从指定状态到当前状态的动画
+gsap.from(".element", { opacity: 0 });
+
+// 从指定起始状态到指定结束状态的动画
+gsap.fromTo(".element", 
+  { x: -100, opacity: 0 },  // 起始状态
+  { x: 100, opacity: 1 }    // 结束状态
+);
+
+// 立即设置属性（无动画）
+gsap.set(".element", { x: 100 });
+```
+
+### 2. 时间轴
+
+时间轴（Timeline）是 GSAP 最强大的功能之一，它允许你轻松创建和控制复杂的动画序列：
+
+```javascript
+// 创建时间轴
+const tl = gsap.timeline();
+
+// 添加动画到时间轴
+tl.to(".box1", { x: 100, duration: 1 })
+  .to(".box2", { y: 50, duration: 0.5 }, "-=0.5") // 与前一个动画重叠 0.5 秒
+  .fromTo(".box3", 
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 0.8 }
+  );
+```
+
+### 3. 控制动画
+
+GSAP 提供了丰富的控制选项：
+
+```javascript
+// 创建一个动画并保存引用
+const myAnimation = gsap.to(".box", { 
+  x: 100, 
+  duration: 2,
+  paused: true  // 创建后暂停
+});
+
+// 控制动画
+myAnimation.play();    // 播放
+myAnimation.pause();   // 暂停
+myAnimation.reverse(); // 反向播放
+myAnimation.restart(); // 重新开始
+myAnimation.seek(1);   // 跳到特定时间点
+```
 
 ## 交互式练习：尝试修改动画
 
-现在，让我们动手实践！下面是一个交互式代码编辑器，你可以修改代码并立即看到效果。尝试调整参数，添加新的属性，或者完全重写动画：
+现在，让我们动手实践！下面是一个互动编辑器，你可以修改代码并即时看到效果：
 
 <GsapEditor 
-  title="编辑并运行你的第一个GSAP动画"
-  :initialJs="`// 尝试修改这段代码
+  title="修改这个简单动画"
+  :initialJs="`// 试试修改这些值
 gsap.to('.animation-target', {
-  duration: 1,
   x: 150,
-  rotation: 360,
-  backgroundColor: '#42b883',
-  ease: 'power2.inOut'
+  y: 50,
+  rotation: 180,
+  backgroundColor: '#ff6b6b',
+  duration: 2,
+  ease: 'back.out(1.7)'
 });`"
 />
 
 ### 你可以尝试的修改：
 
-1. 改变`duration`值，使动画变快或变慢
-2. 替换`ease`值，尝试不同的缓动函数，如`"bounce.out"`、`"elastic.inOut"`或`"steps(5)"`
-3. 添加`y`属性，使元素在垂直方向也移动
-4. 添加`scale`属性，使元素在动画过程中缩放
-5. 使用`delay`属性延迟动画开始的时间
+1. 改变 `x` 和 `y` 的值，观察位置变化
+2. 修改 `duration` 值，让动画变快或变慢
+3. 尝试不同的 `ease` 值，如 `"bounce.out"`、`"elastic.out"`、`"steps(5)"`
+4. 添加 `scale` 属性，使元素在动画过程中缩放
+5. 添加 `opacity` 属性，制作淡入淡出效果
 
-## 浏览器兼容性
+## 下一步
 
-GSAP支持所有现代浏览器以及IE11：
+恭喜你完成了 GSAP 的基本入门！现在你已经了解了：
 
-- Chrome
-- Firefox
-- Safari
-- Edge
-- Opera
-- IE11 (需要使用polyfills支持ES6特性)
+- GSAP 的基本概念和优势
+- 如何在项目中引入 GSAP
+- 创建简单动画的方法
+- GSAP 的核心概念预览
 
-这意味着你可以安心使用GSAP，无需担心跨浏览器兼容性问题。GSAP内部处理了各种浏览器差异，提供一致的动画体验。
-
-## 许可证说明
-
-GSAP采用双重许可模式：
-
-1. **标准许可证** - 免费用于大多数项目，包括商业使用
-2. **商业许可证** ("Club GreenSock") - 提供额外高级插件和商业项目特权
-
-使用标准许可证时，你可以自由使用GSAP核心库和部分免费插件。但某些高级插件(如MorphSVG、DrawSVG)需要商业许可证。详细的许可说明请参考[GreenSock官方许可页面](https://greensock.com/licensing/)。
-
-## 准备好进一步探索了吗？
-
-现在你已经了解了GSAP的基础知识，并创建了第一个动画。接下来，我们将深入学习[GSAP的核心动画方法](./core-methods.html)，包括`to()`、`from()`、`fromTo()`和`set()`等，以及如何利用这些方法创建更复杂的动画效果。
+接下来，我们将深入学习[动画基础要素](./animation-basics.html)，详细了解创建动画所需的各个组成部分。
 
 <style>
-.gsap-feature-box {
+.features-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 20px;
   margin: 30px 0;
 }
 
-.feature {
+.feature-card {
   background: var(--vp-c-bg-soft);
   border-radius: 8px;
   padding: 20px;
-  box-shadow: var(--shadow-1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  align-items: flex-start;
 }
 
-.feature:hover {
+.feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-2);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
-.feature .icon {
-  font-size: 24px;
+.feature-icon {
+  font-size: 2rem;
+  margin-right: 15px;
+  margin-top: 5px;
+}
+
+.feature-content {
+  flex: 1;
+}
+
+.feature-content h3 {
+  margin-top: 0;
   margin-bottom: 10px;
 }
 
-.feature .title {
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: var(--vp-c-brand);
-}
-
-.feature .desc {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--vp-c-text-2);
+.feature-content p {
+  margin: 0;
+  font-size: 0.95rem;
 }
 
 .gsap-demo {
+  margin: 30px 0;
   background: var(--vp-c-bg-soft);
   border-radius: 8px;
   padding: 20px;
-  margin: 30px 0;
-  box-shadow: var(--shadow-1);
 }
 
 .demo-container {
-  background: white;
-  border-radius: 6px;
-  height: 150px;
   position: relative;
-  overflow: hidden;
-  margin-bottom: 15px;
+  height: 150px;
+  margin-bottom: 20px;
 }
 
-.box {
-  width: 50px;
-  height: 50px;
-  background: #ff6b6b;
+.demo-box {
+  width: 80px;
+  height: 80px;
+  background-color: #42b883;
   border-radius: 4px;
   position: absolute;
-  top: 50px;
-  left: 20px;
+  top: 35px;
+  left: 30px;
 }
 
-.controls {
+.demo-controls {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
-  display: flex;
-  gap: 8px;
+  bottom: 0;
+  right: 0;
 }
 
-.controls button {
+.demo-button {
   background: var(--vp-c-brand);
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 5px 10px;
+  padding: 6px 12px;
+  margin-left: 8px;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.3s ease;
+  transition: background 0.2s;
 }
 
-.controls button:hover {
+.demo-button:hover {
   background: var(--vp-c-brand-dark);
 }
 
-.controls .reset-btn {
-  background: #6c757d;
-}
-
-.controls .reset-btn:hover {
-  background: #5a6268;
-}
-
-.code-container {
+.code-preview {
   background: #2d2d2d;
   border-radius: 6px;
   padding: 15px;
   overflow: auto;
 }
 
-.code-container code {
+.code-preview pre {
+  margin: 0;
+}
+
+.code-preview code {
   color: #e6e6e6;
   font-family: monospace;
-  line-height: 1.5;
 }
 </style>
 
@@ -304,33 +364,35 @@ export default {
   setup() {
     onMounted(() => {
       if (typeof gsap !== 'undefined') {
-        const box = document.querySelector("#firstBox");
-        const playBtn = document.querySelector(".play-btn");
-        const resetBtn = document.querySelector(".reset-btn");
+        const firstDemo = document.getElementById('firstDemo')
+        const playFirstDemo = document.getElementById('playFirstDemo')
+        const resetFirstDemo = document.getElementById('resetFirstDemo')
         
-        if (box && playBtn && resetBtn) {
-          playBtn.addEventListener('click', () => {
-            gsap.to(box, {
-              duration: 2,
-              x: 200,
-              rotation: 360,
-              backgroundColor: "#42b883",
-              ease: "power2.inOut"
-            });
-          });
+        if (firstDemo && playFirstDemo && resetFirstDemo) {
+          // 创建动画但不自动播放
+          const demoAnim = gsap.to(firstDemo, {
+            x: 200,
+            rotation: 360,
+            backgroundColor: "#8A2BE2",
+            duration: 2,
+            ease: "power1.inOut",
+            paused: true
+          })
           
-          resetBtn.addEventListener('click', () => {
-            gsap.to(box, {
-              duration: 0.5,
-              x: 0,
-              rotation: 0,
-              backgroundColor: "#ff6b6b",
-              ease: "power1.out"
-            });
-          });
+          // 播放按钮点击事件
+          playFirstDemo.addEventListener('click', () => {
+            demoAnim.restart()
+          })
+          
+          // 重置按钮点击事件
+          resetFirstDemo.addEventListener('click', () => {
+            gsap.set(firstDemo, { 
+              clearProps: "all" 
+            })
+          })
         }
       }
-    });
+    })
   }
 }
 </script> 

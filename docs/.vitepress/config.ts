@@ -16,7 +16,12 @@ export default defineConfig({
   // Markdown 配置
   markdown: {
     // 禁用自动API链接功能
-    linkify: false
+    linkify: false,
+    // 代码块配置
+    // theme: {
+    //   light: 'github-light',
+    //   dark: 'github-dark'
+    // }
   },
   // 端口配置，固定为5173
   vite: {
@@ -31,10 +36,10 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '基础篇', link: '/basics/', activeMatch: '^/basics/' },
-      { text: 'Vue3集成', link: '/vue-integration/', activeMatch: '^/vue-integration/' },
-      { text: 'React集成', link: '/react-integration/', activeMatch: '^/react-integration/' },
       { text: '高级篇', link: '/advanced/', activeMatch: '^/advanced/' },
       { text: '实战应用', link: '/practical/', activeMatch: '^/practical/' },
+      { text: 'Vue3集成', link: '/vue-integration/', activeMatch: '^/vue-integration/' },
+      { text: 'React集成', link: '/react-integration/', activeMatch: '^/react-integration/' },
       { text: '性能优化', link: '/performance/', activeMatch: '^/performance/' },
       { text: 'GSAP编辑器演示', link: '/gsap-editor-demo' },
       { text: '练习场', link: '/playground/', activeMatch: '^/playground/' },
@@ -46,13 +51,16 @@ export default defineConfig({
           text: 'GSAP基础篇',
           items: [
             { text: '概述', link: '/basics/' },
-            { text: 'GSAP简介与环境搭建', link: '/basics/introduction' },
+            { text: 'GSAP入门指南', link: '/basics/introduction' },
+            { text: '动画基础要素', link: '/basics/animation-basics' },
             { text: '核心动画方法', link: '/basics/core-methods' },
-            { text: '选择器与DOM操作', link: '/basics/selectors' },
+            { text: '动画属性详解', link: '/basics/properties' },
+            { text: '选择器与对象操作', link: '/basics/selectors' },
             { text: '时间控制', link: '/basics/timing' },
             { text: '缓动函数', link: '/basics/easing' },
             { text: '回调函数与事件', link: '/basics/callbacks' },
-            { text: '时间轴', link: '/basics/timeline' },
+            { text: '时间轴基础', link: '/basics/timeline-basics' },
+            { text: '综合案例实战', link: '/basics/practical-examples' },
           ]
         }
       ],

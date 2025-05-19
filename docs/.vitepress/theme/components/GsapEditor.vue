@@ -58,7 +58,7 @@ export default {
     },
     initialJs: { 
       type: String, 
-      default: '// 尝试编辑这段代码\ngsap.to(".animation-target", {\n  duration: 1,\n  x: 150,\n  rotation: 360,\n  backgroundColor: "#42b883"\n});' 
+      default: '// 尝试编辑这段代码\ngsap.to(".animation-target", {\n  duration: 1,\n  x: 100, // 减小水平移动距离，避免超出视口\n  rotation: 360,\n  backgroundColor: "#42b883"\n});' 
     }
   },
   

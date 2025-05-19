@@ -1,14 +1,14 @@
 ---
 layout: home
-title: GSAP 动画全栈开发指南
+title: GSAP 动画开发指南
 description: 学习如何在纯JavaScript、Vue3和React中使用GSAP创建专业级动画效果
 hero:
   name: GSAP 动画
-  text: 全栈开发指南
+  text: 开发指南
   tagline: 掌握最新版GSAP (3.13.0+) 在各种前端环境中的应用技巧
   image:
     src: /logo.svg
-    alt: GSAP 动画全栈开发指南
+    alt: GSAP 动画开发指南
   actions:
     - theme: brand
       text: 开始学习
@@ -23,30 +23,30 @@ hero:
       text: GitHub仓库
       link: https://github.com/yourusername/gsap-guide
 features:
-  - title: 原生JavaScript基础
+  - icon: 🚀
+    title: 原生JavaScript基础
     details: 从零开始学习GSAP核心概念，掌握无框架环境下的动画开发技巧。
-    icon: 🚀
-  - title: Vue3深度集成
+  - icon: ⚡
+    title: Vue3深度集成
     details: 结合Vue3组合式API和选项式API，创建响应式动画效果和可复用动画组件。
-    icon: ⚡
-  - title: React实战应用
+  - icon: ⚛️
+    title: React实战应用
     details: 在React组件和hooks中应用GSAP，解决React特有的动画开发挑战。
-    icon: ⚛️
-  - title: 交互式学习系统
+  - icon: 🎨
+    title: 交互式学习系统
     details: 通过内嵌代码编辑器即学即练，每个知识点都配有可直接编辑运行的示例。
-    icon: 🎨
-  - title: 渐进式项目开发
+  - icon: 🏗️
+    title: 渐进式项目开发
     details: 跟随教程构建完整动画项目，将零散知识点串联成实用技能。
-    icon: 🏗️
-  - title: 高级动画技术
+  - icon: 🔥
+    title: 高级动画技术
     details: 深入学习ScrollTrigger、MotionPath等高级插件，创建专业级动画效果。
-    icon: 🔥
-  - title: 性能优化指南
+  - icon: ⚙️
+    title: 性能优化指南
     details: 掌握动画性能优化技巧，确保动画在各种设备上流畅运行。
-    icon: ⚙️
-  - title: 真实项目案例
+  - icon: 📚
+    title: 真实项目案例
     details: 分析基于GSAP构建的商业项目，学习专业动画开发的最佳实践。
-    icon: 📚
 ---
 
 <div class="hero-bg-elements">

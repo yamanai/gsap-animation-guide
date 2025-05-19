@@ -32,16 +32,16 @@ gsap.to(目标元素, {
 
 <GsapEditor 
   title="gsap.to() 基础示例"
-  initialJs="// 基本的to()动画
-    gsap.to('.animation-target', {
-    duration: 1.5,
-    x: 200,
-    y: 20,
-    backgroundColor: '#8a2be2',
-    borderRadius: '8px',
-    rotation: 360,
-    ease: 'power2.inOut'
-    });"
+  :initialJs="`// 基本的to()动画
+gsap.to('.animation-target', {
+  duration: 1.5,
+  x: 100,
+  y: 20,
+  backgroundColor: '#8a2be2',
+  borderRadius: '8px',
+  rotation: 360,
+  ease: 'power2.inOut'
+});`"
 />
 
 ### 常见用法
@@ -73,15 +73,15 @@ gsap.from(目标元素, {
 
 <GsapEditor 
   title="gsap.from() 实例"
-  initialJs="// 元素从透明状态淡入并上升
-    gsap.from('.animation-target', {
-    opacity: 0,
-    y: 50,
-    scale: 0.7,
-    backgroundColor: '#ff6347',
-    duration: 1.2,
-    ease: 'back.out(1.7)'
-    });"
+  :initialJs="`// 元素从透明状态淡入并上升
+gsap.from('.animation-target', {
+  opacity: 0,
+  y: 50,
+  scale: 0.7,
+  backgroundColor: '#ff6347',
+  duration: 1.2,
+  ease: 'back.out(1.7)'
+});`"
 />
 
 ### 常见用法
@@ -117,24 +117,23 @@ gsap.fromTo(目标元素,
 
 <GsapEditor 
   title="gsap.fromTo() 实例"
-  initialJs="// 完全控制动画的起止状态
-    gsap.fromTo('.animation-target', 
-    { // 起始状态
-        x: -150,
-        opacity: 0,
-        backgroundColor: '#ff6347',
-        borderRadius: '0%'
-    },
-    { // 结束状态
-        x: 150,
-        opacity: 1,
-        backgroundColor: '#4682b4',
-        borderRadius: '50%',
-        rotation: 360,
-        duration: 2,
-        ease: 'elastic.out(1, 0.3)'
-    }
-    );"
+  :initialJs="`// 完全控制动画的起止状态
+gsap.fromTo('.animation-target', 
+{ // 起始状态
+  x: -80,
+  opacity: 0,
+  backgroundColor: '#ff6347',
+  borderRadius: '0%'
+},
+{ // 结束状态
+  x: 80,
+  opacity: 1,
+  backgroundColor: '#4682b4',
+  borderRadius: '50%',
+  rotation: 360,
+  duration: 2,
+  ease: 'elastic.out(1, 0.3)'
+});`"
 />
 
 ### 常见用法
@@ -163,25 +162,25 @@ gsap.set(目标元素, {
 
 <GsapEditor 
   title="gsap.set() 与动画组合"
-  initialJs="// 先使用set设置初始状态，然后创建动画
-    // 立即设置元素初始状态
-    gsap.set('.animation-target', {
-    x: -120,
-    backgroundColor: '#3498db',
-    borderRadius: '8px',
-    scale: 0.8
-    });
-    // 0.5秒后开始动画
-    setTimeout(() => {
-    gsap.to('.animation-target', {
-        x: 120,
-        backgroundColor: '#e74c3c',
-        scale: 1,
-        rotation: 180,
-        duration: 1.5,
-        ease: 'power3.inOut'
-    });
-    }, 800);"
+  :initialJs="`// 先使用set设置初始状态，然后创建动画
+// 立即设置元素初始状态
+gsap.set('.animation-target', {
+  x: -80,
+  backgroundColor: '#3498db',
+  borderRadius: '8px',
+  scale: 0.8
+});
+// 0.5秒后开始动画
+setTimeout(() => {
+  gsap.to('.animation-target', {
+    x: 80,
+    backgroundColor: '#e74c3c',
+    scale: 1,
+    rotation: 180,
+    duration: 1.5,
+    ease: 'power3.inOut'
+  });
+}, 800);`"
 />
 
 ### 常见用法
@@ -232,7 +231,7 @@ animation.timeScale(2); // 2倍速播放
 
 <GsapEditor 
   title="GSAP核心方法组合"
-  initialJs="// 组合使用多种核心方法创建连续动画
+  :initialJs="`// 组合使用多种核心方法创建连续动画
 // 1. 重置元素初始状态
 gsap.set('.animation-target', {
   x: 0,
@@ -262,7 +261,7 @@ setTimeout(() => {
   });
 }, 1500);
 // 注意：在实际项目中，应使用GSAP的Timeline来替代setTimeout
-// 我们将在下一章节中学习Timeline"
+// 我们将在下一章节中学习Timeline`"
 />
 
 ## 总结
