@@ -21,33 +21,44 @@
    - gsap.set()
    - 动画参数详解
 
-3. **选择器与DOM操作**
-   - 选择元素方式
-   - 多元素动画
-   - 使用选择器函数
-   - 链式语法
+3. **动画属性详解**
+   - 位置变换属性（x, y, rotation, scale等）
+   - 视觉样式属性（opacity, backgroundColor等）
+   - 尺寸与间距属性（width, height, padding等）
+   - SVG专属属性（fill, stroke, path等）
+   - 3D变换属性（rotationX, perspective等）
+   - 特殊属性（相对值、随机值、函数属性值）
+   - 属性动画应用场景
 
-4. **时间控制**
+4. **选择器与DOM操作**
+   - 选择器类型与特点（ID、类、标签、属性选择器等）
+   - 多元素选择与操作
+   - 使用gsap.utils.toArray()和gsap.utils.selector()
+   - 函数选择器与动态过滤
+   - 选择器性能优化最佳实践
+   - 在动画中访问和修改元素
+
+5. **时间控制**
    - 持续时间(duration)
    - 延迟(delay)
    - 重复(repeat)
    - yoyo效果
    - 交错动画(stagger)
 
-5. **缓动函数(Easing)**
+6. **缓动函数(Easing)**
    - 内置缓动函数
    - 自定义缓动
    - 缓动可视化
    - 缓动函数实践应用
 
-6. **回调函数与事件**
+7. **回调函数与事件**
    - onStart
    - onUpdate
    - onComplete
    - 其他回调时机
    - 回调函数应用场景
 
-7. **时间轴(Timeline)**
+8. **时间轴(Timeline)**
    - 创建时间轴
    - 时间轴参数
    - 向时间轴添加动画
@@ -235,6 +246,27 @@
    - 电池影响与优化
    - 响应式动画设计
 
+### 七、开发规范与最佳实践
+
+1. **代码组织与规范**
+   - GsapEditor组件使用规范
+   - 代码可读性与维护性
+   - 动画命名约定
+   - 注释与文档
+
+2. **动画开发最佳实践**
+   - 性能优化原则（transform vs left/top）
+   - 可维护性设计（参数集中管理）
+   - 适配性考虑（响应式、减弱动画偏好）
+   - 调试与修复技巧
+   - 3D与高级效果处理
+
+3. **教学方法论**
+   - 分类展示与对比
+   - 理论与实践结合
+   - 进阶技巧递进展示
+   - 应用场景关联
+
 ## 目录结构设计
 
 ```
@@ -244,11 +276,13 @@ docs/
 │   ├── index.md            # 基础篇概述
 │   ├── introduction.md     # GSAP简介
 │   ├── core-methods.md     # 核心动画方法
+│   ├── properties.md       # 动画属性详解
 │   ├── selectors.md        # 选择器与DOM操作
 │   ├── timing.md           # 时间控制
 │   ├── easing.md           # 缓动函数
 │   ├── callbacks.md        # 回调函数与事件
-│   └── timeline.md         # 时间轴
+│   └── timeline-basics.md  # 时间轴基础
+│   └── practical-examples.md # 综合案例实战
 │
 ├── vue-integration/        # Vue3集成篇
 │   ├── index.md            # Vue3集成概述
@@ -323,15 +357,22 @@ docs/
     ├── cheatsheet.md    # GSAP速查表
     ├── faq.md           # 常见问题解答
     ├── troubleshooting.md # 问题排查指南
+    ├── code-standards.md  # 代码规范与最佳实践
     └── references.md    # 参考资料与链接
 ```
 
 ## 开发路线图
 
-1. **第一阶段：基础框架与内容**
-   - 完成文档网站基础框架搭建
-   - 开发基础篇全部内容
-   - 实现基础交互式编辑器
+1. **第一阶段：基础框架与内容（当前进度）**
+   - ✅ 完成文档网站基础框架搭建
+   - 🔄 开发基础篇内容
+     - ✅ 动画属性详解
+     - ✅ 选择器与DOM操作
+     - 🔄 核心动画方法
+     - ⏳ 时间控制
+     - ⏳ 缓动函数
+   - ✅ 实现GsapEditor交互式编辑器组件
+   - ✅ 建立项目编码规范与最佳实践
 
 2. **第二阶段：框架集成**
    - 完成Vue3集成篇内容
