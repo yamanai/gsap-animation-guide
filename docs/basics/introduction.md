@@ -223,6 +223,15 @@ myAnimation.seek(1);   // 跳到特定时间点
 
 <GsapEditor 
   title="修改这个简单动画"
+  :initialHtml="`<div class='animation-target'></div>`"
+  :initialCss="`.animation-target {
+  width: 120px;
+  height: 120px;
+  background-color: #42b883;
+  margin: 100px auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}`"
   :initialJs="`// 试试修改这些值
 gsap.to('.animation-target', {
   x: 150,

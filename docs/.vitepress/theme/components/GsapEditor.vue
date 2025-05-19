@@ -1,5 +1,10 @@
 <template>
   <div class="gsap-editor-wrapper" :class="{ 'edit-mode': isEditMode }">
+    <!-- 添加标题区域 -->
+    <div v-if="title" class="editor-title">
+      {{ title }}
+    </div>
+    
     <!-- 标签控制区 -->
     <div class="editor-controls">
       <div class="editor-tabs">
@@ -48,6 +53,10 @@ import { ref, onMounted, watch } from 'vue'
 
 export default {
   props: {
+    title: {
+      type: String,
+      default: ''
+    },
     initialHtml: { 
       type: String, 
       default: '<div class="animation-target"></div>' 
@@ -122,11 +131,15 @@ export default {
             extensions: [
               basicSetup, 
               html(),
-              // 确保编辑器有最小行数
+              // 确保编辑器有最小行数和支持换行
               EditorView.contentAttributes.of({
                 style: 'min-height: 150px;'
               }),
-              EditorView.lineWrapping
+              EditorView.lineWrapping,
+              EditorView.theme({
+                "&": { maxHeight: "400px" },
+                ".cm-scroller": { overflow: "auto" }
+              })
             ]
           })
           
@@ -150,11 +163,15 @@ export default {
             extensions: [
               basicSetup, 
               css(),
-              // 确保编辑器有最小行数
+              // 确保编辑器有最小行数和支持换行
               EditorView.contentAttributes.of({
                 style: 'min-height: 150px;'
               }),
-              EditorView.lineWrapping
+              EditorView.lineWrapping,
+              EditorView.theme({
+                "&": { maxHeight: "400px" },
+                ".cm-scroller": { overflow: "auto" }
+              })
             ]
           })
           
@@ -178,11 +195,15 @@ export default {
             extensions: [
               basicSetup, 
               javascript(),
-              // 确保编辑器有最小行数
+              // 确保编辑器有最小行数和支持换行
               EditorView.contentAttributes.of({
                 style: 'min-height: 150px;'
               }),
-              EditorView.lineWrapping
+              EditorView.lineWrapping,
+              EditorView.theme({
+                "&": { maxHeight: "400px" },
+                ".cm-scroller": { overflow: "auto" }
+              })
             ]
           })
           
@@ -211,10 +232,47 @@ export default {
       frameDoc.open()
       frameDoc.write(`
         <!DOCTYPE html>
-        <html>
+        <html style="height:100%;margin:0;padding:0;">
         <head>
-          <style>${cssContent.value}</style>
+          <style>
+            /* 基础样式确保内容填充整个预览区域 */
+            html, body {
+              height: 100%;
+              margin: 0;
+              padding: 0;
+              overflow: auto;
+            }
+            body {
+              display: flex;
+              flex-direction: column;
+            }
+            /* 自定义样式 */
+            ${cssContent.value}
+          </style>
           <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"><\/script>
+          <!-- 添加 GSAP 付费插件支持 - 使用 GreenSock 提供的可试用版本 -->
+          <script src="https://assets.codepen.io/16327/MorphSVGPlugin3.min.js"><\/script>
+          <script src="https://assets.codepen.io/16327/ScrollTrigger.min.js"><\/script>
+          <script>
+            // 确保插件可用
+            if(window.gsap) {
+              // 注册 MorphSVG 插件
+              if(window.MorphSVGPlugin) {
+                gsap.registerPlugin(MorphSVGPlugin);
+                console.log("MorphSVG 插件已注册");
+              } else {
+                console.warn("MorphSVG 插件未能加载");
+              }
+              
+              // 注册 ScrollTrigger 插件
+              if(window.ScrollTrigger) {
+                gsap.registerPlugin(ScrollTrigger);
+                console.log("ScrollTrigger 插件已注册");
+              } else {
+                console.warn("ScrollTrigger 插件未能加载");
+              }
+            }
+          <\/script>
         </head>
         <body>
           ${htmlContent.value}
@@ -246,10 +304,47 @@ export default {
       frameDoc.open()
       frameDoc.write(`
         <!DOCTYPE html>
-        <html>
+        <html style="height:100%;margin:0;padding:0;">
         <head>
-          <style>${cssContent.value}</style>
+          <style>
+            /* 基础样式确保内容填充整个预览区域 */
+            html, body {
+              height: 100%;
+              margin: 0;
+              padding: 0;
+              overflow: auto;
+            }
+            body {
+              display: flex;
+              flex-direction: column;
+            }
+            /* 自定义样式 */
+            ${cssContent.value}
+          </style>
           <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"><\/script>
+          <!-- 添加 GSAP 付费插件支持 - 使用 GreenSock 提供的可试用版本 -->
+          <script src="https://assets.codepen.io/16327/MorphSVGPlugin3.min.js"><\/script>
+          <script src="https://assets.codepen.io/16327/ScrollTrigger.min.js"><\/script>
+          <script>
+            // 确保插件可用
+            if(window.gsap) {
+              // 注册 MorphSVG 插件
+              if(window.MorphSVGPlugin) {
+                gsap.registerPlugin(MorphSVGPlugin);
+                console.log("MorphSVG 插件已注册");
+              } else {
+                console.warn("MorphSVG 插件未能加载");
+              }
+              
+              // 注册 ScrollTrigger 插件
+              if(window.ScrollTrigger) {
+                gsap.registerPlugin(ScrollTrigger);
+                console.log("ScrollTrigger 插件已注册");
+              } else {
+                console.warn("ScrollTrigger 插件未能加载");
+              }
+            }
+          <\/script>
         </head>
         <body>
           ${htmlContent.value}
@@ -355,6 +450,15 @@ export default {
   max-width: 100%;
 }
 
+.editor-title {
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 1.1em;
+  color: var(--vp-c-text-1);
+  border-bottom: 1px solid var(--vp-c-divider);
+  background-color: var(--vp-c-bg-soft);
+}
+
 .gsap-editor-wrapper:hover {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
@@ -439,25 +543,31 @@ export default {
   height: 250px;
   border-bottom: 1px solid var(--vp-c-divider);
   background-color: var(--vp-c-bg-alt);
+  overflow-y: auto; /* 添加垂直滚动 */
 }
 
 .cm-editor-container {
   height: 100%;
   font-family: 'Fira Code', monospace;
   font-size: 14px;
+  overflow: auto; /* 添加滚动功能 */
+  max-height: 400px; /* 限制最大高度，与预览区域一致 */
 }
 
 .preview-area {
-  min-height: 400px; /* 更大的预览区域高度 */
+  min-height: 400px; /* 恢复为原来的高度 */
+  height: auto; /* 取消固定高度 */
   background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* 防止溢出 */
 }
 
 .preview-frame {
   width: 100%;
-  height: 400px; /* 更大的预览区域高度 */
+  height: 100%; /* 使iframe填充预览区 */
+  min-height: 400px; /* 最小高度 */
   border: none;
   background-color: white;
 }
@@ -488,17 +598,20 @@ export default {
 @media (min-width: 960px) {
   .edit-mode .editor-content {
     flex-direction: row;
+    height: auto; /* 恢复为自适应高度 */
   }
   
   .edit-mode .editors-container {
     width: 50%;
-    height: 400px;
+    height: 400px; /* 恢复为原来的高度 */
     border-bottom: none;
     border-right: 1px solid var(--vp-c-divider);
+    overflow-y: auto; /* 确保可以滚动 */
   }
   
   .edit-mode .preview-area {
     width: 50%;
+    height: 400px; /* 恢复为原来的高度 */
   }
 }
 </style> 

@@ -14,8 +14,8 @@ GSAP (GreenSock Animation Platform) 是一个强大的 JavaScript 动画库，�
 6. [时间控制](./timing.html) - 掌握动画的持续时间、延迟和重复等时间控制属性
 7. [缓动函数](./easing.html) - 使用不同的缓动函数让动画更加自然流畅
 8. [回调函数与事件](./callbacks.html) - 在动画的不同阶段执行代码
-9. [时间轴基础](./timeline-basics.html) - 初步掌握时间轴的概念和基本用法
-10. [综合案例实战](#) - 通过实际案例综合运用所学知识
+9. [时间轴](./timeline.html) - 掌握时间轴的概念和基本用法
+10. [综合案例实战](./practical-examples.html) - 通过实际案例综合运用所学知识
 
 ## 交互式学习
 

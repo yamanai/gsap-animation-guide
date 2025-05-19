@@ -294,6 +294,14 @@ gsap.to(".elements", {
 
 <GsapEditor 
   title="组合多种动画属性"
+  :initialHtml="`<div class='animation-target'></div>`"
+  :initialCss="`.animation-target {
+  width: 120px;
+  height: 120px;
+  background-color: #ff6b6b;
+  margin: 100px auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}`"
   :initialJs="`// 目标元素
 const box = document.querySelector('.animation-target');
 // 综合使用多种动画属性
@@ -335,6 +343,15 @@ gsap.fromTo(box,
 
 <GsapEditor 
   title="渐变色与多属性动画练习"
+  :initialHtml="`<div class='animation-target'></div>`"
+  :initialCss="`.animation-target {
+  width: 120px;
+  height: 120px;
+  background-color: #e74c3c;
+  margin: 100px auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}`"
   :initialJs="`// 修改此代码，创建渐变色动画
 gsap.to('.animation-target', {
   // 提示：尝试添加以下属性

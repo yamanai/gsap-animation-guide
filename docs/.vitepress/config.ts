@@ -55,11 +55,11 @@ export default defineConfig({
             { text: '动画基础要素', link: '/basics/animation-basics' },
             { text: '核心动画方法', link: '/basics/core-methods' },
             { text: '动画属性详解', link: '/basics/properties' },
-            { text: '选择器与对象操作', link: '/basics/selectors' },
+            { text: '选择器与DOM操作', link: '/basics/selectors' },
             { text: '时间控制', link: '/basics/timing' },
             { text: '缓动函数', link: '/basics/easing' },
             { text: '回调函数与事件', link: '/basics/callbacks' },
-            { text: '时间轴基础', link: '/basics/timeline-basics' },
+            { text: '时间轴', link: '/basics/timeline' },
             { text: '综合案例实战', link: '/basics/practical-examples' },
           ]
         }
