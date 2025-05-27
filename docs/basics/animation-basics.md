@@ -6,26 +6,34 @@
 
 一个完整的动画通常包含以下四个核心要素：
 
-<div class="element-grid">
-  <div class="element-card">
-    <div class="element-icon">🎯</div>
-    <h3>目标元素</h3>
-    <p>要进行动画的对象，可以是 DOM 元素、CSS 选择器、对象、数组等</p>
+<div class="features-container">
+  <div class="feature-card">
+    <div class="feature-icon">🎯</div>
+    <div class="feature-content">
+      <h3>目标元素</h3>
+      <p>要进行动画的对象，可以是 DOM 元素、CSS 选择器、对象、数组等</p>
+    </div>
   </div>
-  <div class="element-card">
-    <div class="element-icon">✨</div>
-    <h3>变化属性</h3>
-    <p>动画过程中将要改变的属性，如位置、大小、颜色、透明度等</p>
+  <div class="feature-card">
+    <div class="feature-icon">✨</div>
+    <div class="feature-content">
+      <h3>变化属性</h3>
+      <p>动画过程中将要改变的属性，如位置、大小、颜色、透明度等</p>
+    </div>
   </div>
-  <div class="element-card">
-    <div class="element-icon">⏱️</div>
-    <h3>时间参数</h3>
-    <p>控制动画时长、延迟、重复等时间相关的参数</p>
+  <div class="feature-card">
+    <div class="feature-icon">⏱️</div>
+    <div class="feature-content">
+      <h3>时间参数</h3>
+      <p>控制动画时长、延迟、重复等时间相关的参数</p>
+    </div>
   </div>
-  <div class="element-card">
-    <div class="element-icon">📊</div>
-    <h3>缓动函数</h3>
-    <p>控制动画的速度变化，使其更加自然流畅</p>
+  <div class="feature-card">
+    <div class="feature-icon">📊</div>
+    <div class="feature-content">
+      <h3>缓动函数</h3>
+      <p>控制动画的速度变化，使其更加自然流畅</p>
+    </div>
   </div>
 </div>
 
@@ -259,146 +267,22 @@ gsap.to('.animation-target', {
 });`"
 />
 
+:::tip 练习指南
+尝试结合本章所学的多种动画要素，可以考虑：
+1. 添加位置变换属性（x、y、rotation）
+2. 设置视觉样式属性（backgroundColor、borderRadius）
+3. 配置时间参数（duration、delay、repeat）
+4. 选择合适的缓动函数（ease）
+
+**成功标准**：当你能够创建一个包含至少4种不同类型属性、有合理时间设置和缓动效果的动画，就说明你已经掌握了基本要素的组合应用。
+:::
+
+:::warning 注意事项
+1. 确保所有属性和参数语法正确，特别是颜色值和单位使用
+2. 不同类型的属性可能需要不同的值格式（数字、字符串、函数等）
+3. 如果动画未执行，检查浏览器控制台是否有错误提示
+:::
+
 ## 下一步
 
-掌握了动画的基本要素，你已经能够创建简单的动画效果了。接下来，我们将深入学习 GSAP 的[核心动画方法](./core-methods.html)，掌握 `to()`、`from()`、`fromTo()` 和 `set()` 等方法的使用技巧。
-
-<style>
-.element-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin: 30px 0;
-}
-
-.element-card {
-  background: var(--vp-c-bg-soft);
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.element-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.element-icon {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-
-.ease-demo-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin: 30px 0;
-}
-
-.ease-demo {
-  flex: 1;
-  min-width: 200px;
-}
-
-.ease-track {
-  height: 40px;
-  background: var(--vp-c-bg-soft);
-  border-radius: 20px;
-  position: relative;
-  overflow: hidden;
-}
-
-.ease-ball {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-}
-
-.ease-linear {
-  background-color: #ff6b6b;
-}
-
-.ease-out {
-  background-color: #42b883;
-}
-
-.ease-bounce {
-  background-color: #4a7aff;
-}
-
-.ease-label {
-  text-align: center;
-  margin-top: 5px;
-  font-size: 0.9rem;
-}
-
-.play-easing {
-  display: block;
-  margin: 20px auto;
-  padding: 8px 16px;
-  background: var(--vp-c-brand);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.play-easing:hover {
-  background: var(--vp-c-brand-dark);
-}
-</style>
-
-<script>
-import { onMounted } from 'vue'
-
-export default {
-  setup() {
-    onMounted(() => {
-      const playButton = document.querySelector('.play-easing')
-      const linearBall = document.querySelector('#linear-ball')
-      const outBall = document.querySelector('#out-ball')
-      const bounceBall = document.querySelector('#bounce-ball')
-      
-      if (playButton && linearBall && outBall && bounceBall && typeof gsap !== 'undefined') {
-        // 重置所有小球位置
-        const resetBalls = () => {
-          gsap.set([linearBall, outBall, bounceBall], { left: 5 })
-        }
-        
-        // 初始重置
-        resetBalls()
-        
-        // 播放动画
-        playButton.addEventListener('click', () => {
-          // 重置小球位置
-          resetBalls()
-          
-          // 为每个小球设置不同的缓动动画
-          gsap.to(linearBall, { 
-            left: 'calc(100% - 35px)', 
-            duration: 2, 
-            ease: "none"
-          })
-          
-          gsap.to(outBall, { 
-            left: 'calc(100% - 35px)', 
-            duration: 2, 
-            ease: "power2.out"
-          })
-          
-          gsap.to(bounceBall, { 
-            left: 'calc(100% - 35px)', 
-            duration: 2, 
-            ease: "bounce.out"
-          })
-        })
-      }
-    })
-  }
-}
-</script> 
+掌握了动画的基本要素，你已经能够创建简单的动画效果了。接下来，我们将深入学习 GSAP 的 [核心动画方法](./core-methods.html) ，掌握 `to()`、`from()`、`fromTo()` 和 `set()` 等方法的使用技巧。 

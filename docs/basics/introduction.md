@@ -1,5 +1,7 @@
 # GSAP 入门指南
 
+> **学习目标**：了解 GSAP 的基本概念、优势及引入方式，能够独立完成第一个动画。
+
 欢迎来到 GSAP 的世界！本章将帮助你了解 GSAP 的基本概念，并引导你轻松上手这个强大的 JavaScript 动画库。
 
 ## 什么是 GSAP？
@@ -44,11 +46,15 @@
 
 在众多动画解决方案中，GSAP 有哪些独特优势？
 
-1. **简单直观** - GSAP 的 API 设计直观易懂，即使你是动画新手也能快速上手
-2. **功能全面** - 从基础动画到复杂的时间轴序列，GSAP 都能轻松实现
-3. **不受框架限制** - 可以在任何 JavaScript 环境中使用，包括原生 JS、React、Vue 等
-4. **专业级性能** - 优化的动画引擎让复杂动画也能保持流畅
-5. **活跃的社区** - 丰富的教程资源和活跃的开发者社区提供持续支持
+- **简单直观** —— GSAP 的 API 设计直观易懂，即使你是动画新手也能快速上手
+- **功能全面** —— 从基础动画到复杂的时间轴序列，GSAP 都能轻松实现
+- **不受框架限制** —— 可以在任何 JavaScript 环境中使用，包括原生 JS、React、Vue 等
+- **专业级性能** —— 优化的动画引擎让复杂动画也能保持流畅
+- **活跃的社区** —— 丰富的教程资源和活跃的开发者社区提供持续支持
+
+:::tip
+推荐优先使用 transform、opacity 等属性进行动画，性能更优。更多性能建议详见 [动画属性详解](./properties.html) 。
+:::
 
 ## 快速开始：在项目中引入 GSAP
 
@@ -117,6 +123,10 @@ import gsap from 'gsap';
 gsap.to(".box", { x: 100, duration: 1 });
 ```
 
+:::info
+如需了解更多引入方式和兼容性问题，可参考 [GSAP 官方文档](https://greensock.com/docs/) 。
+:::
+
 ## 你的第一个 GSAP 动画
 
 让我们创建一个简单的动画来感受 GSAP 的魅力。下面是一个基础示例，展示了一个方块从左向右移动，同时旋转并改变颜色：
@@ -146,14 +156,18 @@ gsap.to("#firstDemo", {
 
 让我们来分解这个简单动画的各个部分：
 
-1. `gsap.to()` - GSAP 的核心方法之一，用于创建从当前状态到目标状态的动画
-2. `"#firstDemo"` - 目标元素的选择器（这里是一个 ID 选择器）
-3. 动画配置对象:
-   - `x: 200` - 水平方向移动 200 像素
-   - `rotation: 360` - 旋转 360 度（一整圈）
-   - `backgroundColor: "#8A2BE2"` - 背景色变为紫色
-   - `duration: 2` - 动画持续 2 秒
-   - `ease: "power1.inOut"` - 缓动函数，控制动画速度的变化
+1. `gsap.to()` —— GSAP 的核心方法之一，用于创建从当前状态到目标状态的动画
+2. `"#firstDemo"` —— 目标元素的选择器（这里是一个 ID 选择器）
+3. 动画配置对象：
+   - `x: 200` —— 水平方向移动 200 像素
+   - `rotation: 360` —— 旋转 360 度（一整圈）
+   - `backgroundColor: "#8A2BE2"` —— 背景色变为紫色
+   - `duration: 2` —— 动画持续 2 秒
+   - `ease: "power1.inOut"` —— 缓动函数，控制动画速度的变化
+
+:::info
+推荐在实际项目中将动画参数集中管理，避免硬编码，提升可维护性。详见 [动画开发最佳实践](../cursorrules.md#动画开发最佳实践) 。
+:::
 
 ## GSAP 核心概念预览
 
@@ -243,13 +257,35 @@ gsap.to('.animation-target', {
 });`"
 />
 
-### 你可以尝试的修改：
+:::tip
+你可以尝试：
+- 改变 `x` 和 `y` 的值，观察位置变化
+- 修改 `duration` 值，让动画变快或变慢
+- 尝试不同的 `ease` 值，如 `"bounce.out"` 、 `"elastic.out"` 、 `"steps(5)"`
+- 添加 `scale` 属性，使元素在动画过程中缩放
+- 添加 `opacity` 属性，制作淡入淡出效果
+:::
 
-1. 改变 `x` 和 `y` 的值，观察位置变化
-2. 修改 `duration` 值，让动画变快或变慢
-3. 尝试不同的 `ease` 值，如 `"bounce.out"`、`"elastic.out"`、`"steps(5)"`
-4. 添加 `scale` 属性，使元素在动画过程中缩放
-5. 添加 `opacity` 属性，制作淡入淡出效果
+:::tip 互动学习提示
+这是一个完全可交互的编辑器。尝试修改代码并点击"运行"按钮，观察动画效果的变化。这种动手实践是掌握GSAP最有效的方法之一。
+
+**成功标准**: 当你能够独立修改多个属性并预测动画效果时，就说明你已经初步理解了基本概念。
+:::
+
+:::warning 常见问题
+如果动画没有按预期执行，请检查:
+- 选择器是否正确 (`.animation-target`)
+- 属性值是否有效 (例如，颜色值必须是有效格式)
+- 是否有语法错误 (如缺少逗号或括号)
+:::
+
+## 练习挑战
+
+尝试完成以下简单挑战，巩固所学知识:
+
+1. 修改上面的动画，让元素旋转720度并在动画结束时变为半透明
+2. 添加一个`scale`属性，使元素先放大再恢复原大小
+3. 使用`yoyo: true`和`repeat: 1`让动画来回执行一次
 
 ## 下一步
 
@@ -260,50 +296,9 @@ gsap.to('.animation-target', {
 - 创建简单动画的方法
 - GSAP 的核心概念预览
 
-接下来，我们将深入学习[动画基础要素](./animation-basics.html)，详细了解创建动画所需的各个组成部分。
+接下来，我们将深入学习 [动画基础要素](./animation-basics.html) ，详细了解创建动画所需的各个组成部分。
 
 <style>
-.features-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  margin: 30px 0;
-}
-
-.feature-card {
-  background: var(--vp-c-bg-soft);
-  border-radius: 8px;
-  padding: 20px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  align-items: flex-start;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-
-.feature-icon {
-  font-size: 2rem;
-  margin-right: 15px;
-  margin-top: 5px;
-}
-
-.feature-content {
-  flex: 1;
-}
-
-.feature-content h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-.feature-content p {
-  margin: 0;
-  font-size: 0.95rem;
-}
-
 .gsap-demo {
   margin: 30px 0;
   background: var(--vp-c-bg-soft);

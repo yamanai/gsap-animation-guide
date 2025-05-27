@@ -37,11 +37,11 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: '基础篇', link: '/basics/', activeMatch: '^/basics/' },
       { text: '高级篇', link: '/advanced/', activeMatch: '^/advanced/' },
+      { text: '插件篇', link: '/plugins/', activeMatch: '^/plugins/' },
       { text: '实战应用', link: '/practical/', activeMatch: '^/practical/' },
       { text: 'Vue3集成', link: '/vue-integration/', activeMatch: '^/vue-integration/' },
       { text: 'React集成', link: '/react-integration/', activeMatch: '^/react-integration/' },
       { text: '性能优化', link: '/performance/', activeMatch: '^/performance/' },
-      { text: 'GSAP编辑器演示', link: '/gsap-editor-demo' },
       { text: '练习场', link: '/playground/', activeMatch: '^/playground/' },
     ],
     // 侧边栏配置
@@ -51,6 +51,7 @@ export default defineConfig({
           text: 'GSAP基础篇',
           items: [
             { text: '概述', link: '/basics/' },
+            { text: '前端动画基础概念', link: '/basics/animation-fundamentals' },
             { text: 'GSAP入门指南', link: '/basics/introduction' },
             { text: '动画基础要素', link: '/basics/animation-basics' },
             { text: '核心动画方法', link: '/basics/core-methods' },
@@ -61,6 +62,50 @@ export default defineConfig({
             { text: '回调函数与事件', link: '/basics/callbacks' },
             { text: '时间轴', link: '/basics/timeline' },
             { text: '综合案例实战', link: '/basics/practical-examples' },
+          ]
+        }
+      ],
+      '/advanced/': [
+        {
+          text: '高级篇',
+          items: [
+            { text: '概述', link: '/advanced/' },
+            { 
+              text: '深入理解GSAP核心概念', 
+              items: [
+                { text: '核心概念概述', link: '/advanced/core-concepts/' },
+                { text: 'Position参数详解', link: '/advanced/core-concepts/position-parameter' },
+                { text: '关键帧动画设计', link: '/advanced/core-concepts/keyframes' },
+                { text: 'immediateRender属性解析', link: '/advanced/core-concepts/immediaterender' },
+                { text: '处理冲突补间动画', link: '/advanced/core-concepts/conflicts' },
+                { text: '避免FOUC现象', link: '/advanced/core-concepts/fouc' },
+                { text: '动画无障碍设计', link: '/advanced/core-concepts/accessibility' },
+                { text: '常见GSAP错误与解决方案', link: '/advanced/core-concepts/common-mistakes' },
+              ]
+            },
+            { text: '高级动画控制', link: '/advanced/advanced-control' },
+            { text: '3D动画效果', link: '/advanced/3d-animation' },
+            { text: '复杂交互动画开发', link: '/advanced/complex-interactions' },
+            { text: 'GSAP与现代框架深度集成', link: '/advanced/framework-integration' },
+            { text: '动画调试与优化实战', link: '/advanced/debugging' },
+          ]
+        }
+      ],
+      '/plugins/': [
+        {
+          text: 'GSAP插件篇',
+          items: [
+            { text: '概述', link: '/plugins/' },
+            { text: '插件系统基础', link: '/plugins/plugins-intro' },
+            { text: 'ScrollTrigger插件', link: '/plugins/scrolltrigger' },
+            { text: 'MotionPath插件', link: '/plugins/motionpath' },
+            { text: 'Draggable插件', link: '/plugins/draggable' },
+            { text: 'SVG动画插件', link: '/plugins/svg-animation' },
+            { text: 'Flip插件', link: '/plugins/flip' },
+            { text: 'Observer插件', link: '/plugins/observer' },
+            { text: '文字动画插件', link: '/plugins/text-animation' },
+            { text: 'GSDevTools使用指南', link: '/plugins/gsdevtools' },
+            { text: '插件开发与扩展', link: '/plugins/plugin-development' },
           ]
         }
       ],
@@ -89,21 +134,6 @@ export default defineConfig({
             { text: 'React动画组件设计', link: '/react-integration/components' },
             { text: '状态管理与动画', link: '/react-integration/state-management' },
             { text: 'React过渡组库结合', link: '/react-integration/transitions' },
-          ]
-        }
-      ],
-      '/advanced/': [
-        {
-          text: '高级篇',
-          items: [
-            { text: '概述', link: '/advanced/' },
-            { text: 'ScrollTrigger插件', link: '/advanced/scrolltrigger' },
-            { text: 'MotionPath插件', link: '/advanced/motionpath' },
-            { text: 'Draggable插件', link: '/advanced/draggable' },
-            { text: 'MorphSVG插件', link: '/advanced/morphsvg' },
-            { text: 'DrawSVG插件', link: '/advanced/drawsvg' },
-            { text: '3D动画效果', link: '/advanced/3d-animation' },
-            { text: '高级文字动画', link: '/advanced/text-animation' },
           ]
         }
       ],

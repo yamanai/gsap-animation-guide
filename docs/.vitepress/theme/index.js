@@ -3,6 +3,7 @@ import GsapDemo from './components/GsapDemo.vue'
 import GsapAdvancedDemo from './components/GsapAdvancedDemo.vue'
 import GsapEditor from './components/GsapEditor.vue'
 import './custom.css'
+import './feature-cards.css'
 
 export default {
   ...DefaultTheme,
