@@ -302,7 +302,7 @@ export default {
                   typeof DrawSVGPlugin !== "undefined" &&
                   typeof MorphSVGPlugin !== "undefined" &&
                   typeof SplitText !== "undefined";
-              } catch (e) {
+                } catch (e) {
                 console.warn("GSAP插件检测失败:", e);
                 return false;
               }
@@ -395,7 +395,7 @@ export default {
                 console.log("动画代码执行完成");
               } catch (e) {
                 console.error("动画代码执行错误:", e);
-              }
+                }
             }
             
             // 使用MutationObserver监听DOM变化
