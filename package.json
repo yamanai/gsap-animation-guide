@@ -4,10 +4,13 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev docs",
+    "prebuild": "node docs/.vitepress/build-plugins.js",
     "build": "vitepress build docs",
+    "postbuild": "node docs/.vitepress/build-plugins.js",
     "serve": "vitepress serve docs"
   },
   "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
     "vitepress": "1.0.0-alpha.28",
     "vue": "3.2.44"
   },

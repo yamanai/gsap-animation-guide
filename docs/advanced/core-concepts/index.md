@@ -101,10 +101,10 @@
 以下是我们推荐的学习路径，帮助你更系统地掌握这些高级概念：
 :::
 
-1. 从 [Position参数详解](./position-parameter) 开始，这是理解时间轴的关键
-2. 继续学习 [关键帧动画设计](./keyframes) 和 [immediateRender属性解析](./immediaterender)
-3. 然后深入研究 [处理冲突补间动画](./conflicts) 和 [避免FOUC现象](./fouc)
-4. 最后学习 [动画无障碍设计](./accessibility) 和 [常见GSAP错误与解决方案](./common-mistakes)
+1. 从 Position参数详解 开始，这是理解时间轴的关键
+2. 继续学习 关键帧动画设计 和 immediateRender属性解析
+3. 然后深入研究 处理冲突补间动画 和 避免FOUC现象
+4. 最后学习 动画无障碍设计 和 常见GSAP错误与解决方案
 
 <div class="term-explanation">
   <div class="term-title">核心术语速览</div>

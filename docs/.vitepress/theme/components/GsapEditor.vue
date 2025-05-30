@@ -74,10 +74,18 @@ export default {
     initialJs: { 
       type: String, 
       default: '// 尝试编辑这段代码\ngsap.to(".animation-target", {\n  duration: 1,\n  x: 100, // 减小水平移动距离，避免超出视口\n  rotation: 360,\n  backgroundColor: "#42b883"\n});' 
+    },
+    // 新增属性：自定义滚动高度，允许各个示例自定义滚动区域大小
+    scrollHeight: {
+      type: String,
+      default: '1200px' // 默认保持原有高度，向后兼容
     }
   },
   
   setup(props) {
+    // 基础路径 - 用于加载GSAP文件
+    const baseUrl = ref('');
+    
     // 状态控制
     const isEditMode = ref(false)
     const currentTab = ref('JS')
@@ -98,6 +106,28 @@ export default {
     let htmlEditorView = null
     let cssEditorView = null
     let jsEditorView = null
+    
+    // 初始化基础路径
+    onMounted(() => {
+      // 获取VitePress的基础路径
+      baseUrl.value = import.meta.env.BASE_URL || '/';
+      
+      // 初始加载时只显示预览，不执行动画
+      initPreview()
+    })
+    
+    // 构建GSAP文件路径
+    const getGsapPath = (fileName) => {
+      // 使用可靠的CDN加载GSAP
+      // 支持以下文件:
+      // - gsap.min.js (核心库)
+      // - ScrollTrigger.min.js (滚动触发插件)
+      // - ScrollSmoother.min.js (平滑滚动插件)
+      // - TextPlugin.min.js (文本动画插件)
+      // - MotionPathPlugin.min.js (运动路径插件)
+      // - Flip.min.js (布局切换插件)
+      return `https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/${fileName}`;
+    }
     
     // 切换编辑模式
     const toggleEditMode = (tab) => {
@@ -236,127 +266,84 @@ export default {
       if (!previewFrame.value) return
       isAnimationActive.value = true
       
+      // 检查是否为ScrollTrigger或ScrollSmoother示例
+      const isScrollExample = jsContent.value.includes('ScrollTrigger') || jsContent.value.includes('ScrollSmoother');
+      
       const frameDoc = previewFrame.value.contentDocument
       frameDoc.open()
       frameDoc.write(`
         <!DOCTYPE html>
-        <html style="height:100%;margin:0;padding:0;">
+        <html style="height:${isScrollExample ? 'auto' : '100%'};margin:0;padding:0;">
         <head>
           <style>
             /* 基础样式确保内容填充整个预览区域 */
             html, body {
-              height: 100%;
               margin: 0;
               padding: 0;
-              overflow: auto;
+              /* 只有ScrollTrigger/ScrollSmoother示例需要滚动 */
+              overflow: ${isScrollExample ? 'auto' : 'hidden'};
             }
             body {
               display: flex;
               flex-direction: column;
-              /* 增加预览容器高度，避免动画元素与内容重叠 */
-              min-height: 400px;
+              /* 使用自定义滚动高度 */
+              min-height: ${isScrollExample ? props.scrollHeight : '400px'};
+              height: ${isScrollExample ? 'auto' : '100%'};
               padding: 20px;
               position: relative;
             }
-            /* 确保动画元素有足够的空间且不会与文本重叠 */
-            .animation-target {
+            /* 为滚动示例添加的特殊样式 */
+            ${isScrollExample ? `
+            .gsap-scroll-container {
               position: relative;
-              z-index: 2;
-              /* 添加背景色以提高可见性 */
-              background-color: rgba(255, 107, 107, 0.8);
+              width: 100%;
+              height: auto;
+              padding-bottom: 20px;
             }
+            ` : ''}
             /* 自定义样式 */
             ${cssContent.value}
           </style>
-          <!-- 使用最新的GSAP CDN，包括核心库和所有免费插件 -->
-          <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/Flip.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollToPlugin.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/Observer.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/MotionPathPlugin.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/EaselPlugin.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/PixiPlugin.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/TextPlugin.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/DrawSVGPlugin.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/MorphSVGPlugin.min.js"><\/script>
-          <script src="https://unpkg.com/gsap@3.12.5/dist/SplitText.min.js"><\/script>
+          <!-- 使用本地GSAP文件 -->
+          <script src="${getGsapPath('gsap.min.js')}"><\/script>
+          <script src="${getGsapPath('TextPlugin.min.js')}"><\/script>
+          <script src="${getGsapPath('MotionPathPlugin.min.js')}"><\/script>
+          <script src="${getGsapPath('ScrollTrigger.min.js')}"><\/script>
+          <script src="${getGsapPath('ScrollSmoother.min.js')}"><\/script>
+          <script src="${getGsapPath('Flip.min.js')}"><\/script>
+          ${isScrollExample ? `
+          <script>
+            // 预加载ScrollTrigger配置
+            window.addEventListener('DOMContentLoaded', function() {
+              if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+                // 设置默认清理器
+                ScrollTrigger.config({
+                  autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load,resize'
+                });
+                console.log("ScrollTrigger预配置完成");
+              }
+            });
+          <\/script>
+          ` : ''}
         </head>
         <body>
+          ${isScrollExample ? '<div class="gsap-scroll-container">' : ''}
           ${htmlContent.value}
+          ${isScrollExample ? '</div>' : ''}
           <script>
             // 设置全局变量控制动画运行
-            window.shouldRunAnimation = ${isAnimationActive.value};
+            window.shouldRunAnimation = true;
             
             // GSAP插件加载检测
-            function checkGSAPPluginsLoaded() {
-              try {
-                // 检查所有需要的插件是否可用
-                return typeof gsap !== "undefined" && 
-                  typeof ScrollTrigger !== "undefined" &&
-                  typeof Flip !== "undefined" &&
-                  typeof ScrollToPlugin !== "undefined" &&
-                  typeof Observer !== "undefined" &&
-                  typeof MotionPathPlugin !== "undefined" &&
-                  typeof TextPlugin !== "undefined" &&
-                  typeof DrawSVGPlugin !== "undefined" &&
-                  typeof MorphSVGPlugin !== "undefined" &&
-                  typeof SplitText !== "undefined";
-                } catch (e) {
-                console.warn("GSAP插件检测失败:", e);
-                return false;
-              }
+            function checkGSAPLoaded() {
+              return typeof gsap !== "undefined";
             }
 
-            // 重试加载GSAP
-            let retryCount = 0;
-            const maxRetries = 3;
-            
-            function retryLoadGSAP() {
-              if (retryCount >= maxRetries) {
-                console.error("GSAP加载失败，已达到最大重试次数");
-                return;
-              }
-              
-              retryCount++;
-              console.log("尝试重新加载GSAP (" + retryCount + "/" + maxRetries + ")...");
-              
-              // 重新加载核心库和插件
-              const script = document.createElement("script");
-              script.src = "https://unpkg.com/gsap@3.12.5/dist/gsap.min.js";
-              script.onload = loadPlugins;
-              script.onerror = function() { setTimeout(retryLoadGSAP, 1000); };
-              document.head.appendChild(script);
-            }
-            
-            function loadPlugins() {
-              const plugins = [
-                "ScrollTrigger", "Flip", "ScrollToPlugin", "Observer", 
-                "MotionPathPlugin", "EaselPlugin", "PixiPlugin", 
-                "TextPlugin", "DrawSVGPlugin", "MorphSVGPlugin", "SplitText"
-              ];
-              
-              let loaded = 0;
-              
-              plugins.forEach(function(plugin) {
-                const script = document.createElement("script");
-                script.src = "https://unpkg.com/gsap@3.12.5/dist/" + plugin + ".min.js";
-                script.onload = function() {
-                  loaded++;
-                  if (loaded === plugins.length) {
-                    initGSAP();
-                  }
-                };
-                script.onerror = retryLoadGSAP;
-                document.head.appendChild(script);
-              });
-            }
-            
+            // 初始化GSAP
             function initGSAP() {
-              // 确保GSAP已加载
-              if (typeof gsap === "undefined") {
+              if (!checkGSAPLoaded()) {
                 console.error("GSAP核心库未加载");
-                retryLoadGSAP();
                 return;
               }
               
@@ -364,61 +351,60 @@ export default {
                 // 关闭试用警告
                 gsap.config({trialWarn: false});
                 
-                // 注册所有已加载的插件
-                if (typeof ScrollTrigger !== "undefined") gsap.registerPlugin(ScrollTrigger);
-                if (typeof Flip !== "undefined") gsap.registerPlugin(Flip);
-                if (typeof ScrollToPlugin !== "undefined") gsap.registerPlugin(ScrollToPlugin);
-                if (typeof Observer !== "undefined") gsap.registerPlugin(Observer);
-                if (typeof MotionPathPlugin !== "undefined") gsap.registerPlugin(MotionPathPlugin);
-                if (typeof EaselPlugin !== "undefined") gsap.registerPlugin(EaselPlugin);
-                if (typeof PixiPlugin !== "undefined") gsap.registerPlugin(PixiPlugin);
-                if (typeof TextPlugin !== "undefined") gsap.registerPlugin(TextPlugin);
-                if (typeof DrawSVGPlugin !== "undefined") gsap.registerPlugin(DrawSVGPlugin);
-                if (typeof MorphSVGPlugin !== "undefined") gsap.registerPlugin(MorphSVGPlugin);
-                if (typeof SplitText !== "undefined") gsap.registerPlugin(SplitText);
+                // 注册插件 - 使用更简单的方式
+                var pluginNames = ["TextPlugin", "MotionPathPlugin", "ScrollTrigger", "ScrollSmoother", "Flip"];
                 
-                console.log("GSAP和插件初始化完成");
-                
-                // 如果应该运行动画，执行用户代码
-                if (window.shouldRunAnimation) {
-                  setTimeout(executeAnimation, 100);
+                for (var i = 0; i < pluginNames.length; i++) {
+                  var pluginName = pluginNames[i];
+                  if (window[pluginName]) {
+                    gsap.registerPlugin(window[pluginName]);
+                    console.log(pluginName + "插件注册成功");
+                  }
                 }
-              } catch (e) {
-                console.error("GSAP初始化失败:", e);
+                
+                console.log("GSAP初始化完成");
+                
+                // 延迟执行动画代码
+                setTimeout(executeAnimation, 300);
+              } catch (err) {
+                console.error("GSAP初始化错误:", err);
               }
             }
             
+            // 执行动画代码
             function executeAnimation() {
               try {
                 // 执行用户动画代码
                 ${jsContent.value}
                 console.log("动画代码执行完成");
-              } catch (e) {
-                console.error("动画代码执行错误:", e);
-                }
+              } catch (err) {
+                console.error("动画代码执行错误:", err);
+                // 显示用户友好的错误消息
+                var errorMsg = document.createElement('div');
+                errorMsg.style.color = 'red';
+                errorMsg.style.padding = '10px';
+                errorMsg.style.marginTop = '20px';
+                errorMsg.style.backgroundColor = 'rgba(255,0,0,0.1)';
+                errorMsg.style.borderRadius = '4px';
+                errorMsg.innerHTML = '动画代码执行出错: ' + err.message;
+                document.body.appendChild(errorMsg);
+              }
             }
             
-            // 使用MutationObserver监听DOM变化
-            const observer = new MutationObserver(function(mutations) {
-              if (checkGSAPPluginsLoaded()) {
-                console.log("检测到GSAP已加载");
-                observer.disconnect();
-                initGSAP();
-              }
-            });
-            
-            // 开始监听DOM变化
-            observer.observe(document, { childList: true, subtree: true });
-            
-            // DOM内容加载完成后检查GSAP是否已加载
+            // 页面加载完成后初始化
             document.addEventListener("DOMContentLoaded", function() {
-              if (checkGSAPPluginsLoaded()) {
-                console.log("DOM加载完成，GSAP已就绪");
-                observer.disconnect();
+              if (checkGSAPLoaded()) {
                 initGSAP();
               } else {
-                console.log("DOM加载完成，GSAP未就绪，将自动加载");
-                retryLoadGSAP();
+                console.error("GSAP未加载，请检查文件路径");
+                
+                // 显示错误消息
+                var errorMsg = document.createElement('div');
+                errorMsg.style.color = 'red';
+                errorMsg.style.padding = '20px';
+                errorMsg.style.textAlign = 'center';
+                errorMsg.innerHTML = 'GSAP库加载失败，请检查网络连接或刷新页面重试。';
+                document.body.appendChild(errorMsg);
               }
             });
           <\/script>
@@ -433,58 +419,77 @@ export default {
       if (!previewFrame.value) return
       isAnimationActive.value = false;
       
+      // 检查是否为ScrollTrigger或ScrollSmoother示例
+      const isScrollExample = jsContent.value.includes('ScrollTrigger') || jsContent.value.includes('ScrollSmoother');
+      
       const frameDoc = previewFrame.value.contentDocument
       frameDoc.open()
       frameDoc.write(`
         <!DOCTYPE html>
-        <html style="height:100%;margin:0;padding:0;">
+        <html style="height:${isScrollExample ? 'auto' : '100%'};margin:0;padding:0;">
         <head>
           <style>
             /* 基础样式确保内容填充整个预览区域 */
             html, body {
-              height: 100%;
               margin: 0;
               padding: 0;
-              overflow: auto;
+              /* 只有ScrollTrigger/ScrollSmoother示例需要滚动 */
+              overflow: ${isScrollExample ? 'auto' : 'hidden'};
             }
             body {
               display: flex;
               flex-direction: column;
-              /* 增加预览容器高度，避免动画元素与内容重叠 */
-              min-height: 400px;
+              /* 使用自定义滚动高度 */
+              min-height: ${isScrollExample ? props.scrollHeight : '400px'};
+              height: ${isScrollExample ? 'auto' : '100%'};
               padding: 20px;
             }
+            /* 为滚动示例添加的特殊样式 */
+            ${isScrollExample ? `
+            .gsap-scroll-container {
+              position: relative;
+              width: 100%;
+              height: auto;
+              padding-bottom: 20px;
+            }
+            ` : ''}
             /* 自定义样式 */
             ${cssContent.value}
           </style>
-          <!-- 使用最新的GSAP CDN，包括核心库和所有免费插件 -->
-          <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"><\/script>
+          <!-- 使用了占位HTML以展示样式效果，但不执行动画 -->
+          <style>
+            .animation-notice {
+              text-align: center;
+              padding: 20px;
+              background-color: #f9f9f9;
+              border-radius: 8px;
+              margin: 20px auto;
+              max-width: 80%;
+              box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+              font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            }
+            .run-prompt {
+              margin: 10px 0 0;
+              font-size: 0.9em;
+              color: #0066cc;
+            }
+            /* 让预览模式下的容器也能正确显示样式 */
+            * { box-sizing: border-box; }
+          </style>
+          <!-- 使用本地GSAP文件但不执行 -->
+          <script src="${getGsapPath('gsap.min.js')}"><\/script>
+          <script src="${getGsapPath('TextPlugin.min.js')}"><\/script>
+          <script src="${getGsapPath('MotionPathPlugin.min.js')}"><\/script>
+          <script src="${getGsapPath('ScrollTrigger.min.js')}"><\/script>
+          <script src="${getGsapPath('ScrollSmoother.min.js')}"><\/script>
+          <script src="${getGsapPath('Flip.min.js')}"><\/script>
         </head>
         <body>
           ${htmlContent.value}
-          <script>
-            // 设置全局变量控制动画运行
-            window.shouldRunAnimation = false;
-            
-            // GSAP插件加载检测
-            function checkGSAPPluginsLoaded() {
-              try {
-                return typeof gsap !== "undefined";
-              } catch (e) {
-                return false;
-              }
-            }
-
-            // DOM内容加载完成后检查GSAP是否已加载
-            document.addEventListener("DOMContentLoaded", function() {
-              if (!checkGSAPPluginsLoaded()) {
-                console.log("预览模式: GSAP未加载，尝试加载基本库");
-                const script = document.createElement("script");
-                script.src = "https://unpkg.com/gsap@3.12.5/dist/gsap.min.js";
-                document.head.appendChild(script);
-              }
-            });
-          <\/script>
+          <div class="animation-notice">
+            <div>此处显示HTML和CSS样式效果</div>
+            <p class="run-prompt">点击"运行"按钮执行动画</p>
+          </div>
         </body>
         </html>
       `)
@@ -542,12 +547,6 @@ export default {
       runCode()
     }, { deep: true })
     */
-    
-    // 组件挂载后初始化
-    onMounted(() => {
-      // 初始加载时只显示预览，不执行动画
-      initPreview()
-    })
     
     return {
       isEditMode,
@@ -692,7 +691,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden; /* 防止溢出 */
+  overflow: hidden; /* 修改为hidden，不参与滚动 */
 }
 
 .preview-frame {
@@ -701,6 +700,7 @@ export default {
   min-height: 400px; /* 最小高度 */
   border: none;
   background-color: white;
+  overflow: visible; /* 修改为visible，让内容决定高度 */
 }
 
 /* 暗色模式适配 */

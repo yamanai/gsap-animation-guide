@@ -13,25 +13,25 @@ hero:
     - theme: brand
       text: 开始学习
       link: /basics/
-    - theme: alt
-      text: 在线练习
-      link: /playground/
-    - theme: alt
-      text: 查看示例
-      link: /examples/
-    - theme: alt
-      text: GitHub仓库
-      link: https://github.com/yourusername/gsap-guide
+    # - theme: alt
+    #   text: 在线练习
+    #   link: /playground/
+    # - theme: alt
+    #   text: 查看示例
+    #   link: /examples/
+    # - theme: alt
+    #   text: GitHub仓库
+    #   link: https://github.com/yourusername/gsap-guide
 features:
   - icon: 🚀
     title: 原生JavaScript基础
     details: 从零开始学习GSAP核心概念，掌握无框架环境下的动画开发技巧。
-  - icon: ⚡
-    title: Vue3深度集成
-    details: 结合Vue3组合式API和选项式API，创建响应式动画效果和可复用动画组件。
-  - icon: ⚛️
-    title: React实战应用
-    details: 在React组件和hooks中应用GSAP，解决React特有的动画开发挑战。
+  # - icon: ⚡
+  #   title: Vue3深度集成
+  #   details: 结合Vue3组合式API和选项式API，创建响应式动画效果和可复用动画组件。
+  # - icon: ⚛️
+  #   title: React实战应用
+  #   details: 在React组件和hooks中应用GSAP，解决React特有的动画开发挑战。
   - icon: 🎨
     title: 交互式学习系统
     details: 通过内嵌代码编辑器即学即练，每个知识点都配有可直接编辑运行的示例。

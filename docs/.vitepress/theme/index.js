@@ -5,6 +5,12 @@ import GsapEditor from './components/GsapEditor.vue'
 import './custom.css'
 import './feature-cards.css'
 
+// 导入Flip插件组件 - 只导入实际存在的文件
+import BasicConcepts from '../../../modules/animations/plugins/core/flip/basic-concepts.vue'
+import ConfigurationOptions from '../../../modules/animations/plugins/core/flip/configuration-options.vue'
+import CommonUseCases from '../../../modules/animations/plugins/core/flip/common-use-cases.vue'
+import PerformanceTips from '../../../modules/animations/plugins/core/flip/performance-tips.vue'
+
 export default {
   ...DefaultTheme,
   enhanceApp({ app }) {
@@ -12,6 +18,12 @@ export default {
     app.component('GsapDemo', GsapDemo)
     app.component('GsapAdvancedDemo', GsapAdvancedDemo)
     app.component('GsapEditor', GsapEditor)
+    
+    // 注册Flip组件 - 只注册实际存在的组件
+    app.component('FlipBasicConcepts', BasicConcepts)
+    app.component('FlipConfigurationOptions', ConfigurationOptions)
+    app.component('FlipCommonUseCases', CommonUseCases)
+    app.component('FlipPerformanceTips', PerformanceTips)
     
     // 在客户端挂载时引入GSAP
     if (typeof window !== 'undefined') {
@@ -85,6 +97,15 @@ export default {
         import('gsap/ScrollTrigger').then(ScrollTrigger => {
           gsap.default.registerPlugin(ScrollTrigger.default)
           window.ScrollTrigger = ScrollTrigger.default
+          
+          // 加载ScrollSmoother插件
+          import('gsap/ScrollSmoother').then(ScrollSmoother => {
+            gsap.default.registerPlugin(ScrollSmoother.default)
+            window.ScrollSmoother = ScrollSmoother.default
+            console.log('ScrollSmoother加载完成')
+          }).catch(err => {
+            console.error('ScrollSmoother加载失败:', err)
+          })
         })
       }).catch(err => {
         console.error('GSAP加载失败:', err)

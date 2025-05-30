@@ -23,11 +23,41 @@ export default defineConfig({
     //   dark: 'github-dark'
     // }
   },
-  // 端口配置，固定为5173
+  // Vite配置
   vite: {
     server: {
       port: 5173,
-      strictPort: true // 如果端口已被占用，则会直接失败而不是尝试下一个可用端口
+      strictPort: true, // 如果端口已被占用，则会直接失败而不是尝试下一个可用端口
+      fs: {
+        // 允许访问项目根目录之外的文件
+        allow: ['..', '../../node_modules']
+      }
+    },
+    // 静态资源处理
+    assetsInclude: ['**/*.min.js'],
+    // 解析配置
+    resolve: {
+      // 仅保留文件扩展名配置，移除别名
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
+    },
+    // 优化依赖
+    optimizeDeps: {
+      // 不要优化gsap，保持它为独立文件
+      exclude: ['gsap'],
+      include: ['vue']
+    },
+    // 构建配置
+    build: {
+      // 将gsap作为外部依赖处理
+      rollupOptions: {
+        external: ['gsap'],
+        output: {
+          // 为外部依赖提供全局变量
+          globals: {
+            gsap: 'gsap'
+          }
+        }
+      }
     }
   },
   // 主题配置
@@ -38,11 +68,11 @@ export default defineConfig({
       { text: '基础篇', link: '/basics/', activeMatch: '^/basics/' },
       { text: '高级篇', link: '/advanced/', activeMatch: '^/advanced/' },
       { text: '插件篇', link: '/plugins/', activeMatch: '^/plugins/' },
-      { text: '实战应用', link: '/practical/', activeMatch: '^/practical/' },
-      { text: 'Vue3集成', link: '/vue-integration/', activeMatch: '^/vue-integration/' },
-      { text: 'React集成', link: '/react-integration/', activeMatch: '^/react-integration/' },
-      { text: '性能优化', link: '/performance/', activeMatch: '^/performance/' },
-      { text: '练习场', link: '/playground/', activeMatch: '^/playground/' },
+      // { text: '实战应用', link: '/practical/', activeMatch: '^/practical/' },
+      // { text: 'Vue3集成', link: '/vue-integration/', activeMatch: '^/vue-integration/' },
+      // { text: 'React集成', link: '/react-integration/', activeMatch: '^/react-integration/' },
+      // { text: '性能优化', link: '/performance/', activeMatch: '^/performance/' },
+      // { text: '练习场', link: '/playground/', activeMatch: '^/playground/' },
     ],
     // 侧边栏配置
     sidebar: {
@@ -96,16 +126,89 @@ export default defineConfig({
           text: 'GSAP插件篇',
           items: [
             { text: '概述', link: '/plugins/' },
-            { text: '插件系统基础', link: '/plugins/plugins-intro' },
-            { text: 'ScrollTrigger插件', link: '/plugins/scrolltrigger' },
-            { text: 'MotionPath插件', link: '/plugins/motionpath' },
-            { text: 'Draggable插件', link: '/plugins/draggable' },
-            { text: 'SVG动画插件', link: '/plugins/svg-animation' },
-            { text: 'Flip插件', link: '/plugins/flip' },
-            { text: 'Observer插件', link: '/plugins/observer' },
-            { text: '文字动画插件', link: '/plugins/text-animation' },
-            { text: 'GSDevTools使用指南', link: '/plugins/gsdevtools' },
-            { text: '插件开发与扩展', link: '/plugins/plugin-development' },
+            { text: '插件系统基础', link: '/plugins/basics' },
+            { 
+              text: '核心重点插件', 
+              link: '/plugins/core/',
+              items: [
+                { 
+                  text: 'ScrollTrigger', 
+                  link: '/plugins/core/scrolltrigger/',
+                  items: [
+                    { text: '基础配置详解', link: '/plugins/core/scrolltrigger/configuration' },
+                    { text: '滚动动画类型', link: '/plugins/core/scrolltrigger/scroll-types' },
+                    { text: '常见问题解决', link: '/plugins/core/scrolltrigger/troubleshooting' },
+                  ]
+                },
+                { 
+                  text: 'ScrollSmoother', 
+                  link: '/plugins/core/scrollsmoother/',
+                  items: [
+                    { text: '基本概念与工作原理', link: '/plugins/core/scrollsmoother/basic-concepts' },
+                    { text: '安装与设置', link: '/plugins/core/scrollsmoother/installation' },
+                    { text: '基础配置选项', link: '/plugins/core/scrollsmoother/configuration' },
+                    { text: '常见应用场景', link: '/plugins/core/scrollsmoother/common-use-cases' },
+                    { text: '与ScrollTrigger结合', link: '/plugins/core/scrollsmoother/scrolltrigger-integration' },
+                    { text: '高级功能与技巧', link: '/plugins/core/scrollsmoother/advanced-features' },
+                    { text: '性能优化', link: '/plugins/core/scrollsmoother/performance' },
+                    { text: '常见问题解决', link: '/plugins/core/scrollsmoother/troubleshooting' },
+                    { text: '最佳实践', link: '/plugins/core/scrollsmoother/best-practices' },
+                  ]
+                },
+                { 
+                  text: 'Flip', 
+                  link: '/plugins/core/flip/',
+                  items: [
+                    { text: '基本概念与工作原理', link: '/plugins/core/flip/basic-concepts' },
+                    { text: '安装与设置', link: '/plugins/core/flip/installation' },
+                    { text: '基础API和配置选项', link: '/plugins/core/flip/configuration' },
+                    { text: '常见应用场景', link: '/plugins/core/flip/common-use-cases' },
+                    { text: '高级功能与技巧', link: '/plugins/core/flip/advanced-features' },
+                    { text: '性能优化', link: '/plugins/core/flip/performance' },
+                    { text: '常见问题解决', link: '/plugins/core/flip/troubleshooting' },
+                    { text: '最佳实践', link: '/plugins/core/flip/best-practices' },
+                  ]
+                },
+                { 
+                  text: 'SplitText', 
+                  link: '/plugins/core/splittext/',
+                  items: [
+                    { text: '基本概念与工作原理', link: '/plugins/core/splittext/basic-concepts' },
+                    { text: '安装与设置', link: '/plugins/core/splittext/installation' },
+                    { text: '基础API和配置选项', link: '/plugins/core/splittext/configuration' },
+                    { text: '常见应用场景', link: '/plugins/core/splittext/common-use-cases' },
+                    { text: '高级功能与技巧', link: '/plugins/core/splittext/advanced-features' },
+                    { text: '与其他GSAP功能结合', link: '/plugins/core/splittext/gsap-integration' },
+                    { text: '性能优化', link: '/plugins/core/splittext/performance' },
+                    { text: '常见问题解决', link: '/plugins/core/splittext/troubleshooting' },
+                    { text: '最佳实践', link: '/plugins/core/splittext/best-practices' },
+                  ]
+                },
+              ]
+            },
+            // { 
+            //   text: '常用辅助插件', 
+            //   link: '/plugins/common/',
+            //   items: [
+            //     { text: 'DrawSVG', link: '/plugins/common/drawsvg' },
+            //     { text: 'MotionPath', link: '/plugins/common/motionpath' },
+            //     { text: 'Draggable', link: '/plugins/common/draggable' },
+            //     { text: 'CustomEase', link: '/plugins/common/customease' },
+            //   ]
+            // },
+            // { 
+            //   text: '其他实用插件', 
+            //   link: '/plugins/others/',
+            //   items: [
+            //     { text: '文字相关插件', link: '/plugins/others/text-plugins' },
+            //     { text: 'SVG相关插件', link: '/plugins/others/svg-plugins' },
+            //     { text: '交互增强插件', link: '/plugins/others/interaction' },
+            //     { text: '开发工具类插件', link: '/plugins/others/devtools' },
+            //     { text: '特殊效果插件', link: '/plugins/others/special-effects' },
+            //   ]
+            // },
+            // { text: 'React集成专题', link: '/plugins/react' },
+            // { text: '插件组合应用', link: '/plugins/combinations' },
           ]
         }
       ],
@@ -118,7 +221,7 @@ export default defineConfig({
             { text: '组合式API集成', link: '/vue-integration/composition-api' },
             { text: '选项式API集成', link: '/vue-integration/options-api' },
             { text: '动画组件设计', link: '/vue-integration/components' },
-            { text: 'Vue指令与GSAP', link: '/vue-integration/directives' },
+            { text: '指令与GSAP', link: '/vue-integration/directives' },
             { text: 'Vue过渡与GSAP结合', link: '/vue-integration/transitions' },
           ]
         }
@@ -133,7 +236,7 @@ export default defineConfig({
             { text: '类组件集成', link: '/react-integration/class-components' },
             { text: 'React动画组件设计', link: '/react-integration/components' },
             { text: '状态管理与动画', link: '/react-integration/state-management' },
-            { text: 'React过渡组库结合', link: '/react-integration/transitions' },
+            { text: '过渡组库结合', link: '/react-integration/transitions' },
           ]
         }
       ],

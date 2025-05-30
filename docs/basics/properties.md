@@ -410,10 +410,6 @@ gsap.to('.animation-target', {
 | **加载指示** | rotation, opacity | 旋转的加载图标，周期性改变透明度 |
 | **数据可视化** | height, width, fill | 根据数值调整柱状图高度或饼图大小 |
 
-## 下一步
-
-恭喜！你现在对GSAP动画属性有了全面的了解。这些是创建任何复杂动画的基础构件。掌握了这些属性后，让我们继续学习如何 [选择和操作多个元素](./selectors.html) ，这将帮助你创建更加复杂和丰富的动画序列。
-
 <style>
 .demo-container {
   margin: 30px 0;

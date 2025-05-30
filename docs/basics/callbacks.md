@@ -12,11 +12,18 @@ GSAP提供了强大的回调函数系统，让你能够在动画的不同阶段�
 :::
 
 <script setup>
-import BasicCallbacks from '../../modules/animations/callbacks/basic-callbacks.vue';
-import CallbackParams from '../../modules/animations/callbacks/callback-params.vue';
-import CallbackScope from '../../modules/animations/callbacks/callback-scope.vue';
-import EventListeners from '../../modules/animations/callbacks/event-listeners.vue';
+// 暂时注释掉不存在的组件导入
+// import BasicCallbacks from '../../modules/animations/callbacks/basic-callbacks.vue';
+// import CallbackParams from '../../modules/animations/callbacks/callback-params.vue';
+// import CallbackScope from '../../modules/animations/callbacks/callback-scope.vue';
+// import EventListeners from '../../modules/animations/callbacks/event-listeners.vue';
 </script>
+
+<!-- 添加静态替代内容 -->
+<div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #e0e0e0;">
+  <h3>组件开发中</h3>
+  <p>回调函数演示组件正在开发中。请参考下方代码示例了解回调函数的用法。</p>
+</div>
 
 ## 常用回调函数
 
@@ -24,10 +31,22 @@ GSAP提供了一套完整的回调函数机制，可以在动画生命周期的�
 
 ### 核心回调函数详解
 
-<BasicCallbacks />
+<!-- 替换不存在的组件 -->
+<div style="background-color: #f8f9fa; padding: 15px; border-radius: 6px; margin: 15px 0;">
+  <h4>核心回调函数示例</h4>
+  <pre style="background-color: #f1f1f1; padding: 10px; border-radius: 4px;">
+gsap.to(".box", {
+  x: 100,
+  duration: 2,
+  onStart: () => console.log("动画开始"),
+  onUpdate: () => console.log("动画更新中..."),
+  onComplete: () => console.log("动画完成")
+});
+  </pre>
+</div>
 
 ::: info 📌 操作指引
-👆 点击上方的"播放动画"按钮，观察右侧日志区域显示的回调函数触发顺序和时机。注意onUpdate是如何随着动画进度频繁触发的。
+查看上方代码示例，了解回调函数的基本用法。您可以复制代码到自己的项目中尝试。
 :::
 
 GSAP中的回调函数按触发时机可分为以下几类：
@@ -79,10 +98,26 @@ GSAP回调系统支持复杂的参数传递，让你能够在回调触发时获�
 
 ### 参数传递的多种方式
 
-<CallbackParams />
+<!-- 替换不存在的组件 -->
+<div style="background-color: #f8f9fa; padding: 15px; border-radius: 6px; margin: 15px 0;">
+  <h4>参数传递示例</h4>
+  <pre style="background-color: #f1f1f1; padding: 10px; border-radius: 4px;">
+// 使用onCompleteParams传递参数
+gsap.to(".box", {
+  x: 100,
+  duration: 1,
+  onComplete: handleComplete,
+  onCompleteParams: ["完成了", 42]
+});
+
+function handleComplete(message, number) {
+  console.log(message, number); // "完成了", 42
+}
+  </pre>
+</div>
 
 ::: info 📌 操作指引
-👆 点击"播放动画"按钮，观察每个盒子完成动画时，回调如何接收不同的参数并反馈在日志区域。注意每个元素都传递了自己的信息给回调函数。
+查看上方代码示例，了解回调函数参数传递的基本用法。
 :::
 
 | 参数传递方式 | 语法 | 适用场景 | 优势 |
@@ -190,10 +225,35 @@ function handleUpdate(element, customData) {
 
 ### 默认作用域与自定义作用域
 
-<CallbackScope />
+<!-- 替换不存在的组件 -->
+<div style="background-color: #f8f9fa; padding: 15px; border-radius: 6px; margin: 15px 0;">
+  <h4>作用域控制示例</h4>
+  <pre style="background-color: #f1f1f1; padding: 10px; border-radius: 4px;">
+// 默认作用域 - this指向window或undefined(严格模式)
+gsap.to(".box", {
+  x: 100,
+  onComplete: function() {
+    console.log(this); // window或undefined
+  }
+});
+
+// 自定义作用域 - 数组形式
+const customScope = { name: "自定义对象" };
+gsap.to(".box", {
+  x: 100,
+  onComplete: [
+    function() {
+      console.log(this.name); // "自定义对象"
+    }, 
+    null, // 无参数
+    customScope // 作用域对象
+  ]
+});
+  </pre>
+</div>
 
 ::: info 📌 操作指引
-👆 分别点击"默认作用域"和"自定义作用域"按钮，比较两种模式下日志输出的不同。注意观察`this`关键字的指向如何影响可用的方法和属性。
+查看上方代码示例，了解如何控制回调函数中的this指向。
 :::
 
 #### 默认作用域的方法和属性
